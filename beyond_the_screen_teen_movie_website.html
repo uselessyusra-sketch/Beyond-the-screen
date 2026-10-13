@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beyond the Screen | Teenagers in Movies</title>
+<style>
+:root{
+  --ink:#24213b; --muted:#625f76; --paper:#fffaf5; --card:#ffffff;
+  --pink:#f3a9b9; --coral:#ef786b; --lav:#c9b9f4; --blue:#b9d9ef;
+  --yellow:#f7dc8a; --line:#e9e1e7; --green:#b9dfc8;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif;line-height:1.6}
+a{color:inherit}
+button,input{font:inherit}
+button{cursor:pointer}
+header{position:sticky;top:0;z-index:10;background:rgba(255,250,245,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav{max-width:1120px;margin:auto;padding:13px 22px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{font-weight:900;letter-spacing:-.7px;font-size:1.12rem}
+.brand span{color:var(--coral)}
+nav{display:flex;gap:18px;flex-wrap:wrap}
+nav a{text-decoration:none;color:var(--muted);font-size:.91rem;font-weight:700}
+nav a:hover{color:var(--coral)}
+main{max-width:1120px;margin:auto;padding:0 22px}
+.hero{padding:74px 0 58px;display:grid;grid-template-columns:1.15fr .85fr;gap:42px;align-items:center}
+.eyebrow{display:inline-block;background:#fbe2e8;padding:7px 12px;border-radius:99px;font-size:.78rem;font-weight:800;letter-spacing:1px;text-transform:uppercase}
+h1{font-size:clamp(2.7rem,6vw,5.4rem);line-height:.98;letter-spacing:-3px;margin:20px 0}
+h1 em{font-style:normal;color:var(--coral)}
+.hero p{font-size:1.12rem;max-width:600px;color:var(--muted)}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-block;border:0;border-radius:999px;padding:12px 18px;font-weight:800;text-decoration:none;background:var(--ink);color:white}
+.btn.secondary{background:transparent;border:1px solid var(--ink);color:var(--ink)}
+.btn:hover{transform:translateY(-2px)}
+.poster-wall{min-height:370px;position:relative;display:grid;grid-template-columns:1fr 1fr;gap:13px;transform:rotate(2deg)}
+.poster{border-radius:20px;min-height:165px;padding:19px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 12px 30px #30203b12}
+.poster strong{font-size:1.25rem;line-height:1.05;max-width:160px}
+.poster small{font-weight:700;text-transform:uppercase;letter-spacing:1px}
+.p1{background:var(--pink);transform:rotate(-4deg)}.p2{background:var(--yellow);transform:translateY(18px) rotate(3deg)}
+.p3{background:var(--lav);transform:translateY(-8px) rotate(3deg)}.p4{background:var(--blue);transform:translateY(10px) rotate(-3deg)}
+.p5{background:var(--green);position:absolute;bottom:-5px;left:31%;width:39%;min-height:112px;transform:rotate(-2deg)}
+section{padding:60px 0;scroll-margin-top:80px}
+.section-head{max-width:720px;margin-bottom:28px}
+.kicker{color:var(--coral);font-size:.78rem;letter-spacing:1.5px;font-weight:900;text-transform:uppercase}
+h2{font-size:clamp(2rem,4vw,3.1rem);line-height:1.1;letter-spacing:-1.5px;margin:9px 0 14px}
+.section-head p{color:var(--muted);font-size:1.05rem}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.movie-card{background:var(--card);border:1px solid var(--line);border-radius:20px;overflow:hidden;transition:.2s}
+.movie-card:hover{transform:translateY(-4px);box-shadow:0 14px 28px #2d1c3510}
+.movie-art{min-height:160px;padding:20px;display:flex;align-items:end;position:relative;overflow:hidden}
+.movie-art:before,.movie-art:after{content:"";position:absolute;border-radius:50%;opacity:.45}
+.movie-art:before{width:150px;height:150px;right:-25px;top:-35px;background:#fff}
+.movie-art:after{width:95px;height:95px;right:60px;top:50px;background:#fff}
+.movie-art h3{position:relative;z-index:1;margin:0;font-size:1.7rem;line-height:1.03;max-width:240px}
+.art-pink{background:var(--pink)}.art-yellow{background:var(--yellow)}.art-lav{background:var(--lav)}.art-blue{background:var(--blue)}.art-green{background:var(--green)}
+.movie-info{padding:18px}
+.year{font-size:.78rem;text-transform:uppercase;letter-spacing:1px;color:var(--muted);font-weight:800}
+.movie-info p{color:var(--muted);font-size:.94rem}
+.tag{display:inline-block;background:#f4edf3;padding:5px 9px;border-radius:99px;font-size:.76rem;font-weight:800;margin:2px 3px 2px 0}
+.details{border:0;background:none;color:#c95f59;font-weight:800;padding:8px 0 0}
+.movie-extra{display:none;padding-top:12px;border-top:1px solid var(--line);margin-top:12px}
+.movie-extra.open{display:block}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.panel{padding:25px;border-radius:22px;background:white;border:1px solid var(--line)}
+.panel h3{margin-top:0;font-size:1.3rem}
+.panel p{color:var(--muted)}
+.check-row{display:flex;gap:12px;align-items:flex-start;padding:13px 0;border-bottom:1px solid var(--line)}
+.check-row:last-child{border-bottom:0}
+.check-row input{margin-top:6px;accent-color:var(--coral);width:18px;height:18px}
+.reality{background:#fff0e9;border-radius:24px;padding:26px}
+.reality .myth{font-weight:900;font-size:1.13rem}
+.reveal{display:none;background:white;border-radius:14px;padding:14px;margin-top:12px;color:var(--muted)}
+.reveal.show{display:block}
+.reveal-btn{background:var(--coral);border:0;border-radius:99px;color:white;font-weight:800;padding:10px 15px;margin-top:10px}
+.quiz-wrap{background:var(--ink);color:white;border-radius:24px;padding:28px}
+.quiz-wrap p{color:#e0dbea}
+.question{font-weight:800;font-size:1.13rem;margin:18px 0 10px}
+.answers{display:grid;gap:9px}
+.answer{padding:12px 14px;border:1px solid #716b86;background:transparent;color:white;border-radius:12px;text-align:left}
+.answer:hover{background:#39344f}
+.answer.correct{background:#245b47;border-color:#7bd5a7}.answer.wrong{background:#743b47;border-color:#f39ca8}
+#quiz-feedback{min-height:32px;margin-top:12px;font-weight:700}
+#next-question{margin-top:12px;background:var(--yellow);color:var(--ink)}
+.progress{height:7px;border-radius:99px;background:#4d4761;overflow:hidden;margin:16px 0}
+.progress span{display:block;height:100%;width:0;background:var(--pink);transition:width .2s}
+.callout{background:#f4edf9;padding:26px;border-radius:22px}
+.callout p{color:var(--muted)}
+.source-list{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.source{padding:16px;border:1px solid var(--line);border-radius:14px;background:white}
+.source a{font-weight:800;text-decoration-color:var(--pink);text-underline-offset:3px}
+.source p{font-size:.9rem;color:var(--muted);margin-bottom:0}
+.survey-box{background:#e8f2fb;border-radius:24px;padding:28px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+footer{border-top:1px solid var(--line);padding:28px 22px;text-align:center;color:var(--muted);font-size:.88rem;margin-top:30px}
+.note{font-size:.82rem;color:var(--muted)}
+@media(max-width:760px){
+ .hero{grid-template-columns:1fr;padding-top:48px;gap:30px}
+ .poster-wall{max-width:480px;width:100%;margin:auto;min-height:300px}
+ .grid{grid-template-columns:1fr 1fr}
+ .two-col,.source-list{grid-template-columns:1fr}
+ nav{gap:10px}nav a{font-size:.8rem}
+}
+@media(max-width:500px){
+ .nav{align-items:flex-start;flex-direction:column;gap:8px}
+ .grid{grid-template-columns:1fr}
+ .poster-wall{min-height:275px}
+ .poster{min-height:130px}
+ .p5{min-height:88px}
+ h1{letter-spacing:-2px}
+ .survey-box{align-items:flex-start;flex-direction:column}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="nav">
+    <a class="brand" href="#home" style="text-decoration:none">BEYOND<span> THE SCREEN</span></a>
+    <nav aria-label="Main navigation">
+      <a href="#films">Films</a><a href="#themes">Themes</a><a href="#reality">Reality check</a><a href="#quiz">Quiz</a><a href="#sources">Sources</a>
+    </nav>
+  </div>
+</header>
+<main>
+  <section class="hero" id="home">
+    <div>
+      <span class="eyebrow">A teen media-literacy project</span>
+      <h1>Teen life is more than a <em>movie scene.</em></h1>
+      <p>Movies can help us feel understood, but they can also make certain ideas about popularity, appearance and growing up seem normal. Explore how teenage characters are shown on screen — and remember that real life is more complicated than a script.</p>
+      <div class="actions">
+        <a class="btn" href="#films">Explore the films ↓</a>
+        <a class="btn secondary" href="#reality">Try a reality check</a>
+      </div>
+    </div>
+    <div class="poster-wall" aria-label="Decorative film-theme cards">
+      <div class="poster p1"><small>01 · Popularity</small><strong>Who gets to fit in?</strong></div>
+      <div class="poster p2"><small>02 · Identity</small><strong>Who am I, really?</strong></div>
+      <div class="poster p3"><small>03 · Pressure</small><strong>Expectations vs. reality</strong></div>
+      <div class="poster p4"><small>04 · Friendship</small><strong>More than a label</strong></div>
+      <div class="poster p5"><small>Think critically</small><strong>Question the story.</strong></div>
+    </div>
+  </section>
+
+  <section id="films">
+    <div class="section-head">
+      <span class="kicker">01 / The film shelf</span>
+      <h2>Five films. Different versions of being a teenager.</h2>
+      <p>Select “Explore the themes” on each card to see what the film can help us think about. These are interpretations, not claims that every teenager experiences the same things.</p>
+    </div>
+    <div class="grid">
+      <article class="movie-card">
+        <div class="movie-art art-pink"><h3>Mean Girls</h3></div>
+        <div class="movie-info"><div class="year">2004 · Comedy</div><p>Cady enters a new school and learns how social groups, rumours and status can shape the way people treat one another.</p><span class="tag">Popularity</span><span class="tag">Social status</span>
+          <button class="details" aria-expanded="false">＋ Explore the themes</button>
+          <div class="movie-extra"><strong>Think about:</strong><p>How do characters change their behaviour to gain approval? Does the film challenge popularity rules, or sometimes make them look appealing?</p><strong>Discussion question:</strong><p>How can labels like “popular” or “outcast” affect how someone sees themselves?</p></div>
+        </div>
+      </article>
+      <article class="movie-card">
+        <div class="movie-art art-yellow"><h3>The Breakfast Club</h3></div>
+        <div class="movie-info"><div class="year">1985 · Drama</div><p>Five students from different school groups spend a day in detention and discover that their labels do not explain their whole lives.</p><span class="tag">Stereotypes</span><span class="tag">Identity</span>
+          <button class="details" aria-expanded="false">＋ Explore the themes</button>
+          <div class="movie-extra"><strong>Think about:</strong><p>The characters are introduced through familiar school stereotypes, then reveal more complicated feelings and experiences.</p><strong>Discussion question:</strong><p>Why is it unfair to assume you know someone based on one label?</p></div>
+        </div>
+      </article>
+      <article class="movie-card">
+        <div class="movie-art art-lav"><h3>The Edge of Seventeen</h3></div>
+        <div class="movie-info"><div class="year">2016 · Coming-of-age</div><p>Nadine deals with friendship changes, family tension and the feeling that everyone else has life figured out.</p><span class="tag">Self-image</span><span class="tag">Belonging</span>
+          <button class="details" aria-expanded="false">＋ Explore the themes</button>
+          <div class="movie-extra"><strong>Think about:</strong><p>The story presents awkwardness and emotional reactions as part of growing up, rather than making the main character perfect.</p><strong>Discussion question:</strong><p>How might seeing an imperfect character make viewers feel less alone?</p></div>
+        </div>
+      </article>
+      <article class="movie-card">
+        <div class="movie-art art-blue"><h3>Thirteen</h3></div>
+        <div class="movie-info"><div class="year">2003 · Drama</div><p>Tracy's changing friendships and choices show the pressure to be accepted and the risks of seeking approval.</p><span class="tag">Peer pressure</span><span class="tag">Choices</span>
+          <button class="details" aria-expanded="false">＋ Explore the themes</button>
+          <div class="movie-extra"><strong>Think about:</strong><p>The film explores how the need to belong can influence decisions. Its intense story is one portrayal, not a typical experience for every teen.</p><strong>Discussion question:</strong><p>What can make it difficult to say no when a group is pressuring someone?</p></div>
+        </div>
+      </article>
+      <article class="movie-card">
+        <div class="movie-art art-green"><h3>Clueless</h3></div>
+        <div class="movie-info"><div class="year">1995 · Comedy</div><p>Cher navigates school, friendship, style and relationships while learning that her first impressions are not always right.</p><span class="tag">Appearance</span><span class="tag">First impressions</span>
+          <button class="details" aria-expanded="false">＋ Explore the themes</button>
+          <div class="movie-extra"><strong>Think about:</strong><p>Fashion and popularity are a big part of the film's world, but Cher also has room to learn and reconsider her assumptions.</p><strong>Discussion question:</strong><p>How can a film make appearance seem important, and how can viewers question that message?</p></div>
+        </div>
+      </article>
+      <article class="movie-card">
+        <div class="movie-art" style="background:#f4e7dd"><h3>Look closer.</h3></div>
+        <div class="movie-info"><div class="year">Your turn</div><p>While watching any teen film, notice who gets attention, which behaviours are rewarded, and whose perspective is missing.</p><span class="tag">Media literacy</span><span class="tag">Critical thinking</span></div>
+      </article>
+    </div>
+  </section>
+
+  <section id="themes">
+    <div class="section-head">
+      <span class="kicker">02 / Patterns to notice</span>
+      <h2>What messages do teen movies send?</h2>
+      <p>Use these prompts to look beyond the plot and think about how a story represents teenage life.</p>
+    </div>
+    <div class="two-col">
+      <div class="panel"><h3>Appearance and beauty standards</h3><p>Costumes, styling, camera angles and comments about looks can suggest which appearances are admired. Ask whether different body types, styles and identities are represented fairly.</p></div>
+      <div class="panel"><h3>Popularity and social status</h3><p>Stories may show popularity as power, safety or success. Notice whether characters are valued for their personality or mainly for their social position.</p></div>
+      <div class="panel"><h3>Stereotypes and labels</h3><p>Characters can be simplified into roles such as “the brain,” “the athlete” or “the popular one.” Think about what gets lost when a person is reduced to one label.</p></div>
+      <div class="panel"><h3>Peer pressure and belonging</h3><p>Teen characters sometimes change their choices or appearance to fit in. Ask what the character wants, what the group expects, and what the consequences are.</p></div>
+    </div>
+  </section>
+
+  <section id="reality">
+    <div class="section-head">
+      <span class="kicker">03 / Interactive reality check</span>
+      <h2>A movie message is not a rule for real life.</h2>
+      <p>Read each statement and reveal a question that can help you think about it critically.</p>
+    </div>
+    <div class="two-col">
+      <div class="reality"><div class="myth">“Everyone at school cares about popularity.”</div><button class="reveal-btn" data-target="r1">Check the message</button><div class="reveal" id="r1">A film may focus on social status because it creates conflict. In real life, people care about different things, and school communities are not all the same. Ask: whose perspective does the story leave out?</div></div>
+      <div class="reality"><div class="myth">“You have to look a certain way to be liked.”</div><button class="reveal-btn" data-target="r2">Check the message</button><div class="reveal" id="r2">Movies use styling and visuals to communicate quickly, but appearance does not determine a person's worth. Ask: is the film questioning beauty standards, repeating them, or doing both?</div></div>
+      <div class="reality"><div class="myth">“Teenagers are always dramatic and reckless.”</div><button class="reveal-btn" data-target="r3">Check the message</button><div class="reveal" id="r3">Conflict makes stories interesting, so films may focus on intense moments. That does not mean every teenager behaves this way. Ask: is this one character being treated as if they represent everyone?</div></div>
+      <div class="reality"><div class="myth">“Changing yourself is the only way to fit in.”</div><button class="reveal-btn" data-target="r4">Check the message</button><div class="reveal" id="r4">Some stories show characters changing to gain approval, but belonging can also come from friendships where people accept differences. Ask: what does the character gain, and what might they lose?</div></div>
+    </div>
+  </section>
+
+  <section id="quiz">
+    <div class="section-head">
+      <span class="kicker">04 / Quick quiz</span>
+      <h2>How critically do you watch?</h2>
+      <p>Choose an answer for each question. You will get feedback after every choice.</p>
+    </div>
+    <div class="quiz-wrap">
+      <div id="quiz-count">Question 1 of 4</div>
+      <div class="progress"><span id="progress-bar"></span></div>
+      <div class="question" id="question">If a movie shows one popular group, what should you remember?</div>
+      <div class="answers" id="answers">
+        <button class="answer" data-index="0">Every school has the same social groups.</button>
+        <button class="answer" data-index="1">It is one version of school life, not a universal rule.</button>
+        <button class="answer" data-index="2">Popular characters are always happier.</button>
+      </div>
+      <div id="quiz-feedback" aria-live="polite"></div>
+      <button class="btn" id="next-question" style="display:none">Next question →</button>
+      <div id="quiz-result" style="display:none"></div>
+    </div>
+  </section>
+
+  <section id="sources">
+    <div class="section-head">
+      <span class="kicker">05 / Go a little deeper</span>
+      <h2>Research and further reading</h2>
+      <p>This project combines film analysis with research about media and body image. Research can show associations and patterns, but it does not mean that one film affects every viewer in the same way.</p>
+    </div>
+    <div class="source-list">
+      <div class="source"><a href="https://pubmed.ncbi.nlm.nih.gov/11835293/" target="_blank" rel="noopener">Media images and body satisfaction</a><p>A research paper examining the relationship between exposure to media images and body satisfaction.</p></div>
+      <div class="source"><a href="https://pubmed.ncbi.nlm.nih.gov/34801229/" target="_blank" rel="noopener">Social media and adolescent body image</a><p>A review of research on social media use and body image among adolescents. This is related background, not film-specific evidence.</p></div>
+      <div class="source"><a href="https://pubmed.ncbi.nlm.nih.gov/34962632/" target="_blank" rel="noopener">Media literacy and body image</a><p>Research related to interventions that help people think more critically about media messages and body image.</p></div>
+      <div class="source"><a href="https://www.criterion.com/current/posts/5243-the-breakfast-club-smells-like-teen-realness" target="_blank" rel="noopener">The Breakfast Club: teen identity</a><p>A film-focused article exploring the movie and its portrayal of teenage life.</p></div>
+      <div class="source"><a href="https://time.com/4574481/the-edge-of-seventeen/" target="_blank" rel="noopener">The Edge of Seventeen</a><p>A review that can support further thinking about the film's coming-of-age themes.</p></div>
+      <div class="source"><a href="https://abcnews.com/Entertainment/movies-sixteen-candles-clueless-girls-common/story?id=28922665" target="_blank" rel="noopener">Clueless and teen film culture</a><p>An article discussing teen movies and the way they represent teenage girls.</p></div>
+    </div>
+  
+  </section>
+
+  <section id="feedback">
+    <div class="survey-box">
+      <div><span class="kicker">06 / Help improve this website</span><h2 style="font-size:2rem">What did you take away?</h2><p>Share whether the website was easy to use, which section was most useful, and what you learned about teen movie portrayals.</p><p 
+      <a class="btn" id="survey-link" href="https://docs.google.com/forms/d/1Ilq6JVxZiQF2epLDgsIYL7k7p1CJfR5u3rkGZ_OdrUQ/edit
+">Give feedback ↗</a>
+    </div>
+  </section>
+</main>
+<footer>Beyond the Screen · A student media-literacy project<br><span class="note">Movies are stories. They can reflect parts of life, but they do not define every teenager's experience.</span></footer>
+<script>
+document.querySelectorAll('.details').forEach(button=>{
+  button.addEventListener('click',()=>{
+    const extra=button.nextElementSibling;
+    const open=extra.classList.toggle('open');
+    button.setAttribute('aria-expanded',String(open));
+    button.textContent=open?'− Hide themes':'＋ Explore the themes';
+  });
+});
+document.querySelectorAll('.reveal-btn').forEach(button=>{
+  button.addEventListener('click',()=>{
+    const panel=document.getElementById(button.dataset.target);
+    const open=panel.classList.toggle('show');
+    button.textContent=open?'Hide reality check':'Check the message';
+  });
+});
+const questions=[
+ {q:'If a movie shows one popular group, what should you remember?',a:['Every school has the same social groups.','It is one version of school life, not a universal rule.','Popular characters are always happier.'],correct:1,why:'Correct. A film presents a particular story. Real schools and people are more varied.'},
+ {q:'A character is called “the nerd” throughout a film. What is a useful critical question?',a:['Does this label show the character’s whole identity?','Are labels always accurate?','Should every character have one label?'],correct:0,why:'Exactly. Labels can make characters easy to recognise, but they can hide their complexity.'},
+ {q:'A movie focuses on appearance and fashion. What can you examine?',a:['Whether the film suggests appearance determines worth.','Whether all viewers will copy the characters.','Whether appearance is the only thing that matters.'],correct:0,why:'Yes. Look at how appearance is presented and whether the story challenges or reinforces beauty standards.'},
+ {q:'What is the best way to use research about media and self-image?',a:['Claim movies affect every teenager in the same way.','Ignore the research if it is complicated.','Use it carefully and remember that many factors influence self-image.'],correct:2,why:'Correct. Research can suggest patterns, but individual experiences differ and correlation does not automatically prove cause.'}
+];
+let current=0,score=0,answered=false;
+const qEl=document.getElementById('question'), aEl=document.getElementById('answers'), fb=document.getElementById('quiz-feedback'), next=document.getElementById('next-question'), count=document.getElementById('quiz-count'), bar=document.getElementById('progress-bar'), result=document.getElementById('quiz-result');
+function renderQuestion(){
+ answered=false; const q=questions[current]; count.textContent=`Question ${current+1} of ${questions.length}`;
+ bar.style.width=`${current/questions.length*100}%`; qEl.textContent=q.q; fb.textContent=''; next.style.display='none'; aEl.innerHTML='';
+ q.a.forEach((answer,i)=>{const b=document.createElement('button');b.className='answer';b.textContent=answer;b.addEventListener('click',()=>chooseAnswer(i,b));aEl.appendChild(b);});
+}
+function chooseAnswer(index,button){
+ if(answered)return;answered=true;const q=questions[current];
+ [...aEl.children].forEach((b,i)=>{b.disabled=true;if(i===q.correct)b.classList.add('correct')});
+ if(index===q.correct){score++;fb.textContent='Correct! '+q.why;}else{button.classList.add('wrong');fb.textContent='Not quite. '+q.why;}
+ next.textContent=current===questions.length-1?'See my result →':'Next question →';next.style.display='inline-block';
+}
+next.addEventListener('click',()=>{
+ current++;
+ if(current<questions.length){renderQuestion();return;}
+ qEl.textContent='You finished the quiz!';aEl.innerHTML='';fb.textContent='';next.style.display='none';bar.style.width='100%';
+ result.style.display='block';result.innerHTML=`<p style="font-size:1.3rem;font-weight:900">Your score: ${score} / ${questions.length}</p><p>${score===4?'Great critical thinking!':score>=2?'Good start. Keep questioning the messages films send.':'Keep practising. Try the reality-check section and have another go.'}</p><button class="answer" id="restart">Try again</button>`;
+ document.getElementById('restart').addEventListener('click',()=>{current=0;score=0;result.style.display='none';renderQuestion();});
+});
+renderQuestion();
+</script>
+</body>
+</html>
